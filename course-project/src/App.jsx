@@ -1,31 +1,57 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import Viewport from './Viewport'
+import Weather from './Weather'
+import Forecast from './Forecast'
+import Searchfield from './Searchfield'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, Container, Row, Col } from 'react-bootstrap'
 
 function App() {
   const [count, setCount] = useState(0)
   const [weather, setWeather] = useState(null);
 
-  const apiCall = async () => {
+  const fetchWeather = async () => {
+    const city = "helsinki";
+    const apiKey = import.meta.env.VITE_API_KEY;
+
     try {
-      const response = await fetch("API_URL_HERE");
-      const data = response.json();
+      const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`);
+      const data = await response.json();
       setWeather(data);
-    } catch(error) {
+    } catch (error) {
       console.log("Problem in apiCall", error);
     }
 
   }
 
   useEffect(() => {
-    apiCall();
+    fetchWeather();
   }, [])
+
+  useEffect(() => {
+    document.body.style.backgroundColor = 'darkgray';
+
+    return () => {
+      document.body.style.backgroundColor = '';
+    };
+  }, []);
 
   return (
     <>
-    <div>Testing localhost</div>
-    <Viewport />
+      <Container fluid>
+        <Searchfield />
+      </Container>
+
+      <Container fluid className="pt-5 mt-5">
+        <Row>
+          <Col>
+            <Weather />
+          </Col>
+          <Col>
+            <Forecast/>
+          </Col>
+        </Row>
+      </Container>
     </>
   )
 }

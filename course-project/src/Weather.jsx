@@ -1,13 +1,13 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
 
-function Viewport() {
+function Weather() {
     return (
         <>
             <Card>
                 <Card.Body>
                     <Card.Text>
-                        This is a test text
+                        This will be the current weather view
                     </Card.Text>
                 </Card.Body>
             </Card>
@@ -15,4 +15,4 @@ function Viewport() {
     )
 }
 
-export default Viewport;
+export default Weather;
