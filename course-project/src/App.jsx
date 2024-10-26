@@ -81,7 +81,7 @@ function App() {
       <Container fluid className="pt-5 mt-5">
         <Row>
           <Col sm={6}>
-            <Weather />
+            <Weather weather={weather}/>
           </Col>
           <Col sm={6}>
             <Forecast/>
