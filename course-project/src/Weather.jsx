@@ -3,6 +3,23 @@ import { Card } from 'react-bootstrap'
 
 function Weather({weather}) {
 
+    if (!weather || !weather.weather) {
+        return (
+            <Card>
+            <Card.Header>Current weather</Card.Header>
+            <Card.Body>
+                <Card.Title>
+                
+                </Card.Title>
+                <Card.Text>
+
+                    
+                </Card.Text>
+            </Card.Body>
+        </Card>
+        )
+    }
+
     const desc = weather.weather[0].description;
 
     return (
@@ -13,13 +30,10 @@ function Weather({weather}) {
                     <Card.Title>
                         {weather.name}, {weather.sys.country}
                     </Card.Title>
-                    <Card.Text>
-                        
-                        <p>Temperature: {weather.main.temp} C</p>
-                        <p>Cloud cover: {desc}</p>
-                        <p>Windspeed: <p>{weather.wind.speed} m/s from {weather.wind.deg} degrees</p></p>
-                        
-                    </Card.Text>
+                    <Card.Text>Temperature: {weather.main.temp} C</Card.Text>
+                    <Card.Text>Cloud cover: {desc}</Card.Text>
+                    <Card.Text>Windspeed: {weather.wind.speed} m/s from {weather.wind.deg} degrees</Card.Text>
+
                 </Card.Body>
             </Card>
         </>
