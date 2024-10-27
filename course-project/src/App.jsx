@@ -4,9 +4,11 @@ import Weather from './Weather'
 import Forecast from './Forecast'
 import Searchfield from './Searchfield'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Container, Row, Col } from 'react-bootstrap'
+import { Button, Container, Row, Col, Navbar, Nav, NavbarBrand } from 'react-bootstrap'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import Mapview from './Mapview'
+import { HashRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 
 function App() {
   const [weather, setWeather] = useState(null);
@@ -148,24 +150,59 @@ function App() {
   }, []);
 
   return (
-    <div className="main-container">
-      <div className="d-flex justify-content-center">The one and only weather app!</div>
-      <Container fluid className="pt-5 mt-5">
-        <Searchfield setCity={setCity} />
-      </Container>
-  
-      <Container fluid="md" className="pt-5 mt-5">
-        <Row className="justify-content-center">
-          <Col sm={12} md={8} lg={6}>
-            <Weather weather={weather} />
-          </Col>
-          <Col sm={12} md={8} lg={6}>
-            <Forecast forecast={forecast} />
-          </Col>
-        </Row>
-      </Container>
-      <ToastContainer />
-    </div>
+
+    <Router>
+      
+      <Navbar>
+        <Container>
+          <NavbarBrand>Otsikkoteksti</NavbarBrand>
+          <Link to="/">Weather & Forecast</Link>
+          <Link to="/weathermap">Mapview</Link>
+        </Container>
+      </Navbar>
+
+      <Routes>
+        <Route 
+          path="/"
+          element = {
+            <div className="main-container">
+            <div className="d-flex justify-content-center">The one and only weather app!</div>
+            <Container fluid className="pt-5 mt-5">
+              <Searchfield setCity={setCity} />
+            </Container>
+        
+            <Container fluid="md" className="pt-5 mt-5">
+              <Row className="justify-content-center">
+                <Col sm={12} md={8} lg={6}>
+                  <Weather weather={weather} />
+                </Col>
+                <Col sm={12} md={8} lg={6}>
+                  <Forecast forecast={forecast} />
+                </Col>
+              </Row>
+            </Container>
+      
+            <ToastContainer />
+          </div>
+          }
+        />
+
+        <Route 
+          path="/weathermap"
+          element = {
+            <Mapview />
+          }
+        />
+
+        <Route 
+          path="*" 
+          element={<Navigate 
+          to="/" />} 
+        />
+
+      </Routes>
+    </Router>
+
   )
   
 }
