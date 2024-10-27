@@ -9,11 +9,9 @@ function Weather({weather}) {
             <Card.Header>Current weather</Card.Header>
             <Card.Body>
                 <Card.Title>
-                
+                Search for a city first
                 </Card.Title>
                 <Card.Text>
-
-                    
                 </Card.Text>
             </Card.Body>
         </Card>
@@ -25,12 +23,10 @@ function Weather({weather}) {
     return (
         <>
             <Card>
-                <Card.Header>Current weather</Card.Header>
+                <Card.Header>Current weather in {weather.name}, {weather.sys.country}</Card.Header>
                 <Card.Body>
-                    <Card.Title>
-                        {weather.name}, {weather.sys.country}
-                    </Card.Title>
-                    <Card.Text>Temperature: {weather.main.temp} C</Card.Text>
+
+                    <Card.Text>Temperature: {weather.main.temp} °C</Card.Text>
                     <Card.Text>Cloud cover: {desc}</Card.Text>
                     <Card.Text>Windspeed: {weather.wind.speed} m/s from {weather.wind.deg} degrees</Card.Text>
 

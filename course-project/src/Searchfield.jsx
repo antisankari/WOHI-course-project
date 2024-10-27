@@ -21,8 +21,8 @@ function Searchfield(props) {
     }
     
     return (
-            <Container>
-                <Row>
+            <Container className="d-flex justify-content-center">
+                <Row className="w-100 justify-content-center">
                     <Col sm={8}>
                         <Form.Control
                             id="inputCity"
@@ -34,7 +34,7 @@ function Searchfield(props) {
                         <Form.Text id="cityNameBlock" muted>
                         </Form.Text>
                     </Col>
-                    <Col sm={4}>
+                    <Col sm="auto">
                         <Button onClick={handleButtonClick} variant="outline-primary">Get weather!</Button>
                     </Col>
                 </Row>

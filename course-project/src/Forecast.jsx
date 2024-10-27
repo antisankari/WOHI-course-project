@@ -11,14 +11,9 @@ function Forecast({ forecast }) {
                     <Card.Header>Forecast</Card.Header>
                     <Card.Body>
                         <Card.Title>
-                            No data
+                            Search for a city first
                         </Card.Title>
                         <Card.Text>
-
-                            x
-
-
-
                         </Card.Text>
                     </Card.Body>
                 </Card>
@@ -31,32 +26,82 @@ function Forecast({ forecast }) {
     function formatDate(dateString) {
         const date = new Date(dateString);
         const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-indexed
+        const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
 
         return `${day}.${month}.${year}`;
     }
 
+    // this is AI generated
+    const forecastData = (list) => {
+        const times = ['06:00:00', '12:00:00', '18:00:00'];
+        const dataByDay = {};
+
+        list.forEach((entry) => {
+            const [date, time] = entry.dt_txt.split(' ');
+
+            if (times.includes(time)) {
+                if (!dataByDay[date]) {
+                    dataByDay[date] = [];
+                }
+                dataByDay[date].push(entry);
+            }
+        });
+
+        return dataByDay;
+    };
+
+    const dataByDay = forecastData(forecast.list);
+
+    // this is AI generated
+    const dailySummary = Object.keys(dataByDay)
+        .slice(0, 3)
+        .map((date) => {
+            const dailyData = dataByDay[date];
+
+            return {
+                date: formatDate(date),
+                forecasts: dailyData.map((item) => ({
+                    time: item.dt_txt.split(' ')[1],
+                    temp: item.main.temp,
+                    condition: item.weather[0].description,
+                    windSpeed: item.wind.speed,
+                })),
+            };
+        });
+
     return (
-        <Card>
-            <Card.Header>4-Day Forecast</Card.Header>
+        <Container>
+            <Card>
+            <Card.Header>3-Day Forecast for {forecast.city.name}, {forecast.city.country}</Card.Header>
             <Card.Body>
-                <Card.Title>{forecast.city.name}, {forecast.city.country}</Card.Title>
-                <Card.Text>
-                    <ListGroup variant="flush">
-                        {items.map((item, index) => (
-                            <ListGroup.Item key={index}>
-                                <p>{formatDate(item.dt_txt)}</p>
-                                <p>Temperature: {item.main.temp}°C</p>
-                                <p>Condition: {item.weather[0].description}</p>
-                                <p>Wind Speed: {item.wind.speed} m/s</p>
-                            </ListGroup.Item>
+                <ListGroup variant="flush">
+                {dailySummary.map((day, index) => (
+                    <ListGroup.Item key={index}>
+                    <Row>
+                        <Col>
+                        <p><strong>{day.date}</strong></p>
+                        </Col>
+                    </Row>
+                    <Row>
+                        {day.forecasts.map((item, j) => (
+                        <Col key={j} sm={4}>
+                            <div>
+                            <p>{item.time}</p>
+                            <p>Temp: {item.temp} °C</p>
+                            <p>Condition: {item.condition}</p>
+                            <p>Wind: {item.windSpeed} m/s</p>
+                            </div>
+                        </Col>
                         ))}
-                    </ListGroup>
-                </Card.Text>
+                    </Row>
+                    </ListGroup.Item>
+                ))}
+                </ListGroup>
             </Card.Body>
-        </Card>
-    )
+            </Card>
+        </Container>
+        );
 
 }
 
