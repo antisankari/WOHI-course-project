@@ -9,11 +9,19 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import Mapview from './Mapview'
 import { HashRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
+import i18n from './i18n'
+import { useTranslation } from 'react-i18next';
+
 
 function App() {
+  const {t} = useTranslation();
   const [weather, setWeather] = useState(null);
   const [city, setCity] = useState("");
   const [forecast, setForecast] = useState(null);
+
+  const changeLanguage = (language) => {
+    i18n.changeLanguage(language)
+  };
 
   // geolocation
   useEffect(() => {
@@ -153,12 +161,20 @@ function App() {
 
     <Router>
       
-      <Navbar>
+      <Navbar bg="dark" variant="dark" expand="lg">
         <Container>
-          <NavbarBrand>Otsikkoteksti</NavbarBrand>
-          <Link to="/">Weather & Forecast</Link>
-          <Link to="/weathermap">Mapview</Link>
+          <NavbarBrand>{t('navtitle')}</NavbarBrand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Nav.Link as={Link} to="/">{t('navweather')}</Nav.Link>
+              <Nav.Link as={Link} to="/weathermap">{t('navmap')}</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
         </Container>
+        <div id="output"></div>
+        <Button className="me-2" onClick={() => changeLanguage('en')}>Eng</Button>
+        <Button className="me-2" onClick={() => changeLanguage('fi')}>Fi</Button>
       </Navbar>
 
       <Routes>
@@ -166,8 +182,7 @@ function App() {
           path="/"
           element = {
             <div className="main-container">
-            <div className="d-flex justify-content-center">The one and only weather app!</div>
-            <Container fluid className="pt-5 mt-5">
+            <Container fluid className="mt-5">
               <Searchfield setCity={setCity} />
             </Container>
         

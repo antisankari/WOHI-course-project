@@ -1,12 +1,15 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
+import {useTranslation} from 'react-i18next'
+
 
 function Weather({weather}) {
+    const {t} = useTranslation();
 
     if (!weather || !weather.weather) {
         return (
             <Card>
-            <Card.Header>Current weather</Card.Header>
+            <Card.Header>{t('currentWeather')}</Card.Header>
             <Card.Body>
                 <Card.Title>
                 Search for a city first
@@ -23,13 +26,11 @@ function Weather({weather}) {
     return (
         <>
             <Card>
-                <Card.Header>Current weather in {weather.name}, {weather.sys.country}</Card.Header>
+                <Card.Header>{t('currentWeather')}{weather.name}, {weather.sys.country}</Card.Header>
                 <Card.Body>
-
-                    <Card.Text>Temperature: {weather.main.temp} °C</Card.Text>
-                    <Card.Text>Cloud cover: {desc}</Card.Text>
-                    <Card.Text>Windspeed: {weather.wind.speed} m/s from {weather.wind.deg} degrees</Card.Text>
-
+                    <Card.Text>{t('tempNow')}{weather.main.temp} °C</Card.Text>
+                    <Card.Text>{t('cloudsNow')}{desc}</Card.Text>
+                    <Card.Text>{t('windNow')}{weather.wind.speed} m/s {t('windNowFrom')} {weather.wind.deg} {t('windNowDegrees')}</Card.Text>
                 </Card.Body>
             </Card>
         </>

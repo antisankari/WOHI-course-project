@@ -11,8 +11,10 @@ function Mapview() {
         [70.5, 31.0]
     ]
 
+    // I have no idea how the TileLayer code can work as s, z, x and y are not considered as JS
+    // type, but as the modified example code works I don't dare to change it
     return (
-        <MapContainer
+        <MapContainer className='mt-5'
             center={[65, 25]}
             zoom={5}
             minZoom={5}

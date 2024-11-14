@@ -1,14 +1,17 @@
 import React from 'react'
 import { Card, ListGroup } from 'react-bootstrap'
 import { Button, Container, Row, Col } from 'react-bootstrap'
+import {useTranslation} from 'react-i18next'
 
 function Forecast({ forecast }) {
+
+    const {t} = useTranslation();
 
     if (!forecast || !forecast.list) {
         return (
             <>
                 <Card>
-                    <Card.Header>Forecast</Card.Header>
+                    <Card.Header>{t('forecast')}</Card.Header>
                     <Card.Body>
                         <Card.Title>
                             Search for a city first
@@ -32,7 +35,7 @@ function Forecast({ forecast }) {
         return `${day}.${month}.${year}`;
     }
 
-    // this is AI generated
+    // this is AI generated, I had no idea how to get the times I wanted from the JSON
     const forecastData = (list) => {
         const times = ['06:00:00', '12:00:00', '18:00:00'];
         const dataByDay = {};
@@ -53,7 +56,8 @@ function Forecast({ forecast }) {
 
     const dataByDay = forecastData(forecast.list);
 
-    // this is AI generated
+    // this is AI generated, I couldnt figure out how and what to do with JS to get the
+    // parts of JSON that I needed
     const dailySummary = Object.keys(dataByDay)
         .slice(0, 3)
         .map((date) => {
@@ -73,7 +77,7 @@ function Forecast({ forecast }) {
     return (
         <Container>
             <Card>
-            <Card.Header>3-Day Forecast for {forecast.city.name}, {forecast.city.country}</Card.Header>
+            <Card.Header>{t('threeDay')}{forecast.city.name}, {forecast.city.country}</Card.Header>
             <Card.Body>
                 <ListGroup variant="flush">
                 {dailySummary.map((day, index) => (
@@ -88,9 +92,9 @@ function Forecast({ forecast }) {
                         <Col key={j} sm={4}>
                             <div>
                             <p>{item.time}</p>
-                            <p>Temp: {item.temp} °C</p>
-                            <p>Condition: {item.condition}</p>
-                            <p>Wind: {item.windSpeed} m/s</p>
+                            <p>{t('threeDayTemp')}{item.temp} °C</p>
+                            <p>{t('threeDayCond')}{item.condition}</p>
+                            <p>{t('threeDayWind')}{item.windSpeed} m/s</p>
                             </div>
                         </Col>
                         ))}

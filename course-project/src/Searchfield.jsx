@@ -1,8 +1,10 @@
 import React from "react";
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import { Form, Button, Container, Row, Col } from 'react-bootstrap'
+import {useTranslation} from 'react-i18next'
 
 function Searchfield(props) {
+    const { t, i18n } = useTranslation();
     const [inputCity, setInputCity] = useState("");
 
     const handleInputChange = (e) => {
@@ -20,6 +22,19 @@ function Searchfield(props) {
         }
     }
     
+    // for some reason text in Button wont change according to localization without useEffect
+    useEffect(() => {
+        const handleLanguageChange = () => {
+          setInputCity(inputCity); // Trigger re-render
+        };
+    
+        i18n.on("languageChanged", handleLanguageChange);
+    
+        return () => {
+          i18n.off("languageChanged", handleLanguageChange);
+        };
+      }, [i18n, inputCity]);
+
     return (
             <Container className="d-flex justify-content-center">
                 <Row className="w-100 justify-content-center">
@@ -29,13 +44,13 @@ function Searchfield(props) {
                             value={inputCity}
                             onChange={handleInputChange}
                             onKeyDown={handleKeyDown}
-                            placeholder="Enter city name to fetch weather!"
+                            placeholder={t('searchPlaceholder')}
                         />
                         <Form.Text id="cityNameBlock" muted>
                         </Form.Text>
                     </Col>
                     <Col sm="auto">
-                        <Button onClick={handleButtonClick} variant="outline-primary">Get weather!</Button>
+                        <Button onClick={handleButtonClick} variant="outline-primary">{t('searchButton')}</Button>
                     </Col>
                 </Row>
             </Container>
