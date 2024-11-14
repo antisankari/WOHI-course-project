@@ -50,7 +50,7 @@ function Searchfield(props) {
                         </Form.Text>
                     </Col>
                     <Col sm="auto">
-                        <Button onClick={handleButtonClick} variant="outline-primary">{t('searchButton')}</Button>
+                        <Button onClick={handleButtonClick} variant="primary">{t('searchButton')}</Button>
                     </Col>
                 </Row>
             </Container>

@@ -9,7 +9,7 @@ i18n.use(initReactI18next).init({
             translation : {
                 navtitle: "Quick weather",
                 navweather: "Weather & Forecast",
-                navmap: "Precipication map",
+                navmap: "Rain map",
                 searchPlaceholder: "Enter city name here!",
                 searchButton: "Search!",
                 currentWeather: "Current weather in ",
